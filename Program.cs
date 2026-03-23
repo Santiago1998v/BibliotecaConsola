@@ -20,17 +20,16 @@ static class MenuPrincipal
             Console.WriteLine("║  5. Persistencia             ║");
             Console.WriteLine("║  0. Salir                    ║");
             Console.WriteLine("╚══════════════════════════════╝");
-            Console.Write("\n  Seleccione una opción: ");
 
-            switch (Console.ReadLine())
+            switch (Utilidades.LeerOpcion())
             {
-                case "1": MenuLibros.Mostrar();          break;
-                case "2": MenuUsuarios.Mostrar();        break;
-                case "3": MenuPrestamos.Mostrar();       break;
-                case "4": MenuBusquedas.Mostrar();       break;
-                case "5": MenuPersistencia.Mostrar();    break;
+                case "1": MenuLibros.Mostrar();            break;
+                case "2": MenuUsuarios.Mostrar();          break;
+                case "3": MenuPrestamos.Mostrar();         break;
+                case "4": MenuBusquedas.Mostrar();         break;
+                case "5": MenuPersistencia.Mostrar();      break;
                 case "0": salir = FlujoSalida.Confirmar(); break;
-                default:  Utilidades.OpcionInvalida();   break;
+                default:  Utilidades.OpcionInvalida();     break;
             }
         }
     }
@@ -47,6 +46,13 @@ static class FlujoSalida      { public static bool Confirmar() => Utilidades.Con
 // ─── Utilidades compartidas ───────────────────────────────────────────────────
 static class Utilidades
 {
+    // Lee la opción del usuario mostrando el prompt
+    public static string LeerOpcion()
+    {
+        Console.Write("\n  Seleccione una opción: ");
+        return Console.ReadLine()?.Trim() ?? "";
+    }
+
     // Muestra mensaje de módulo pendiente y espera tecla
     public static void ProximaMente(string modulo)
     {
@@ -65,7 +71,7 @@ static class Utilidades
     // Avisa que la opción no existe
     public static void OpcionInvalida()
     {
-        Console.WriteLine("\n  Opción no válida.");
+        Console.WriteLine("\n  Opción no válida. Intente de nuevo.");
         Pausa();
     }
 
