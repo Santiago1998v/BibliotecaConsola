@@ -129,7 +129,37 @@ static class MenuPrestamos
         }
     }
 }
-static class MenuBusquedas    { public static void Mostrar() => Utilidades.ProximaMente("Búsquedas y Reportes"); }
+// ─── Menú Búsquedas y Reportes ────────────────────────────────────────────────
+static class MenuBusquedas
+{
+    public static void Mostrar()
+    {
+        bool volver = false;
+        while (!volver)
+        {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║    BÚSQUEDAS Y REPORTES      ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║  1. Buscar libro             ║");
+            Console.WriteLine("║  2. Buscar usuario           ║");
+            Console.WriteLine("║  3. Reporte de préstamos     ║");
+            Console.WriteLine("║  4. Reporte de devoluciones  ║");
+            Console.WriteLine("║  0. Volver                   ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+
+            switch (Utilidades.LeerOpcion())
+            {
+                case "1": Utilidades.Accion("Buscar libro");            break;
+                case "2": Utilidades.Accion("Buscar usuario");          break;
+                case "3": Utilidades.Accion("Reporte de préstamos");    break;
+                case "4": Utilidades.Accion("Reporte de devoluciones"); break;
+                case "0": volver = true;                                break;
+                default:  Utilidades.OpcionInvalida();                  break;
+            }
+        }
+    }
+}
 static class MenuPersistencia { public static void Mostrar() => Utilidades.ProximaMente("Persistencia"); }
 static class FlujoSalida      { public static bool Confirmar() => Utilidades.Confirmar("¿Desea salir del sistema?"); }
 
