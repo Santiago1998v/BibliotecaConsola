@@ -98,8 +98,37 @@ static class MenuUsuarios
         }
     }
 }
+// ─── Menú Préstamos ───────────────────────────────────────────────────────────
+static class MenuPrestamos
+{
+    public static void Mostrar()
+    {
+        bool volver = false;
+        while (!volver)
+        {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║       GESTIÓN PRÉSTAMOS      ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║  1. Registrar préstamo       ║");
+            Console.WriteLine("║  2. Registrar devolución     ║");
+            Console.WriteLine("║  3. Listar préstamos         ║");
+            Console.WriteLine("║  4. Préstamos vencidos       ║");
+            Console.WriteLine("║  0. Volver                   ║");
+            Console.WriteLine("╚══════════════════════════════╝");
 
-static class MenuPrestamos    { public static void Mostrar() => Utilidades.ProximaMente("Préstamos"); }
+            switch (Utilidades.LeerOpcion())
+            {
+                case "1": Utilidades.Accion("Registrar préstamo");   break;
+                case "2": Utilidades.Accion("Registrar devolución"); break;
+                case "3": Utilidades.Accion("Listar préstamos");     break;
+                case "4": Utilidades.Accion("Préstamos vencidos");   break;
+                case "0": volver = true;                             break;
+                default:  Utilidades.OpcionInvalida();               break;
+            }
+        }
+    }
+}
 static class MenuBusquedas    { public static void Mostrar() => Utilidades.ProximaMente("Búsquedas y Reportes"); }
 static class MenuPersistencia { public static void Mostrar() => Utilidades.ProximaMente("Persistencia"); }
 static class FlujoSalida      { public static bool Confirmar() => Utilidades.Confirmar("¿Desea salir del sistema?"); }
