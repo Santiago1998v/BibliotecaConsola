@@ -160,7 +160,35 @@ static class MenuBusquedas
         }
     }
 }
-static class MenuPersistencia { public static void Mostrar() => Utilidades.ProximaMente("Persistencia"); }
+// ─── Menú Persistencia ────────────────────────────────────────────────────────
+static class MenuPersistencia
+{
+    public static void Mostrar()
+    {
+        bool volver = false;
+        while (!volver)
+        {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════╗");
+            Console.WriteLine("║         PERSISTENCIA         ║");
+            Console.WriteLine("╠══════════════════════════════╣");
+            Console.WriteLine("║  1. Guardar datos            ║");
+            Console.WriteLine("║  2. Cargar datos             ║");
+            Console.WriteLine("║  3. Exportar reporte         ║");
+            Console.WriteLine("║  0. Volver                   ║");
+            Console.WriteLine("╚══════════════════════════════╝");
+
+            switch (Utilidades.LeerOpcion())
+            {
+                case "1": Utilidades.Accion("Guardar datos");    break;
+                case "2": Utilidades.Accion("Cargar datos");     break;
+                case "3": Utilidades.Accion("Exportar reporte"); break;
+                case "0": volver = true;                         break;
+                default:  Utilidades.OpcionInvalida();           break;
+            }
+        }
+    }
+}
 static class FlujoSalida      { public static bool Confirmar() => Utilidades.Confirmar("¿Desea salir del sistema?"); }
 
 // ─── Utilidades compartidas ───────────────────────────────────────────────────
