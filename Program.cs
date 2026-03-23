@@ -189,8 +189,29 @@ static class MenuPersistencia
         }
     }
 }
-static class FlujoSalida      { public static bool Confirmar() => Utilidades.Confirmar("¿Desea salir del sistema?"); }
+// ─── Flujo de Salida ──────────────────────────────────────────────────────────
+static class FlujoSalida
+{
+    public static bool Confirmar()
+    {
+        Console.Clear();
+        Console.WriteLine("╔══════════════════════════════╗");
+        Console.WriteLine("║         SALIR                ║");
+        Console.WriteLine("╠══════════════════════════════╣");
+        Console.WriteLine("║  ¿Desea salir del sistema?   ║");
+        Console.WriteLine("╚══════════════════════════════╝");
 
+        if (Utilidades.Confirmar("Confirme su elección"))
+        {
+            Console.Clear();
+            Console.WriteLine("  Gracias por usar el Sistema de Biblioteca.");
+            Console.WriteLine("  ¡Hasta pronto!");
+            Thread.Sleep(1500);
+            return true;
+        }
+        return false;
+    }
+}
 // ─── Utilidades compartidas ───────────────────────────────────────────────────
 static class Utilidades
 {
