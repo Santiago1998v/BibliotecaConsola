@@ -1,4 +1,49 @@
-﻿// Punto de entrada principal de la aplicación
+﻿using BibliotecaConsola.Models;
+
+// ─── Pruebas de objetos del modelo ────────────────────────────────────────────
+Console.WriteLine("═══════════════════════════════════════");
+Console.WriteLine("   PRUEBAS DE CLASES DEL MODELO");
+Console.WriteLine("═══════════════════════════════════════\n");
+
+// Crear libros de prueba
+Libro libro1 = new Libro(1, "Cien años de soledad", "Gabriel García Márquez", "978-0307474728", 1967);
+Libro libro2 = new Libro(2, "El principito", "Antoine de Saint-Exupéry", "978-0156012195", 1943);
+
+Console.WriteLine("── Libros ──────────────────────────────");
+Console.WriteLine(libro1.ResumenCorto());
+Console.WriteLine(libro2.ResumenCorto());
+Console.WriteLine();
+
+// Crear usuarios de prueba
+Usuario usuario1 = new Usuario(1, "Carlos", "Ramírez", "carlos@email.com", "3001234567");
+Usuario usuario2 = new Usuario(2, "Ana", "López", "ana@email.com", "3107654321");
+
+Console.WriteLine("── Usuarios ────────────────────────────");
+Console.WriteLine(usuario1.DetalleCompleto());
+Console.WriteLine();
+Console.WriteLine(usuario2.DetalleCompleto());
+Console.WriteLine();
+
+// Crear préstamo de prueba
+Prestamo prestamo1 = new Prestamo(1, libro1, usuario1, diasPlazo: 7);
+
+Console.WriteLine("── Préstamo ────────────────────────────");
+Console.WriteLine(prestamo1.DetalleCompleto());
+Console.WriteLine();
+
+// Verificar disponibilidad del libro prestado
+Console.WriteLine($"¿Libro disponible tras préstamo? {(libro1.Disponible ? "Sí" : "No")}");
+
+// Registrar devolución
+prestamo1.Devolver();
+Console.WriteLine($"Estado tras devolución: {prestamo1.Estado}");
+Console.WriteLine($"¿Libro disponible tras devolución? {(libro1.Disponible ? "Sí" : "No")}");
+
+Console.WriteLine("\nPresione cualquier tecla para continuar al menú...");
+Console.ReadKey();
+Console.Clear();
+
+// ─── Menú Principal ───────────────────────────────────────────────────────────
 MenuPrincipal.Mostrar();
 
 // ─── Menú Principal ───────────────────────────────────────────────────────────
@@ -98,6 +143,7 @@ static class MenuUsuarios
         }
     }
 }
+
 // ─── Menú Préstamos ───────────────────────────────────────────────────────────
 static class MenuPrestamos
 {
@@ -129,6 +175,7 @@ static class MenuPrestamos
         }
     }
 }
+
 // ─── Menú Búsquedas y Reportes ────────────────────────────────────────────────
 static class MenuBusquedas
 {
@@ -160,6 +207,7 @@ static class MenuBusquedas
         }
     }
 }
+
 // ─── Menú Persistencia ────────────────────────────────────────────────────────
 static class MenuPersistencia
 {
@@ -189,6 +237,7 @@ static class MenuPersistencia
         }
     }
 }
+
 // ─── Flujo de Salida ──────────────────────────────────────────────────────────
 static class FlujoSalida
 {
@@ -212,6 +261,7 @@ static class FlujoSalida
         return false;
     }
 }
+
 // ─── Utilidades compartidas ───────────────────────────────────────────────────
 static class Utilidades
 {
