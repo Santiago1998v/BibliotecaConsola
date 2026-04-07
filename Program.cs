@@ -1,5 +1,5 @@
 ﻿using BibliotecaConsola.Models;
-
+using BibliotecaConsola.Services;
 // ─── Pruebas de objetos del modelo ────────────────────────────────────────────
 Console.WriteLine("═══════════════════════════════════════");
 Console.WriteLine("   PRUEBAS DE CLASES DEL MODELO");
@@ -43,6 +43,68 @@ Console.WriteLine($"Días transcurridos: {prestamo1.DiasTranscurridos()}");
 prestamo1.Devolver();
 Console.WriteLine($"Estado tras devolución: {prestamo1.Estado}");
 Console.WriteLine($"¿Libro disponible tras devolución? {(libro1.Disponible ? "Sí" : "No")}");
+
+Console.WriteLine("\nPresione cualquier tecla para continuar al menú...");
+Console.ReadKey();
+Console.Clear();
+
+// ─── Pruebas de Servicios ─────────────────────────────────────────────────────
+Console.WriteLine("═══════════════════════════════════════");
+Console.WriteLine("   PRUEBAS DE SERVICIOS Y KPIs");
+Console.WriteLine("═══════════════════════════════════════\n");
+
+// Instanciar servicios
+LibroService libroService       = new LibroService();
+UsuarioService usuarioService   = new UsuarioService();
+PrestamoService prestamoService = new PrestamoService();
+
+// Agregar libros
+libroService.AgregarLibro(new Libro(1, "Cien años de soledad", "García Márquez", "978-01", 1967));
+libroService.AgregarLibro(new Libro(2, "El principito", "Saint-Exupéry", "978-02", 1943));
+libroService.AgregarLibro(new Libro(3, "Don Quijote", "Cervantes", "978-03", 1605));
+
+// Agregar usuarios
+usuarioService.AgregarUsuario(new Usuario(1, "Carlos", "Ramírez", "carlos@email.com", "3001234567"));
+usuarioService.AgregarUsuario(new Usuario(2, "Ana", "López", "ana@email.com", "3107654321"));
+
+// Agregar préstamos
+Libro libroP1    = libroService.BuscarPorId(1)!;
+Usuario usuarioP1 = usuarioService.BuscarPorId(1)!;
+Prestamo prestamoP1 = new Prestamo(1, libroP1, usuarioP1, 7);
+prestamoService.AgregarPrestamo(prestamoP1);
+
+// ── Búsquedas ────────────────────────────────────────────────────────────────
+Console.WriteLine("── Búsquedas ───────────────────────────");
+Console.WriteLine(libroService.BuscarPorTitulo("principito")[0].ResumenCorto());
+Console.WriteLine(usuarioService.BuscarPorNombre("Carlos")[0].ResumenCorto());
+Console.WriteLine(prestamoService.BuscarPorId(1)!.ResumenCorto());
+Console.WriteLine();
+
+// ── Ordenaciones ─────────────────────────────────────────────────────────────
+Console.WriteLine("── Libros ordenados por título ─────────");
+foreach (var l in libroService.OrdenarPorTitulo())
+    Console.WriteLine(l.ResumenCorto());
+Console.WriteLine();
+
+// ── KPIs ─────────────────────────────────────────────────────────────────────
+Console.WriteLine("── KPIs Libros ─────────────────────────");
+Console.WriteLine($"Total libros     : {libroService.TotalLibros()}");
+Console.WriteLine($"Disponibles      : {libroService.LibrosDisponibles()}");
+Console.WriteLine($"Prestados        : {libroService.LibrosPrestados()}");
+Console.WriteLine();
+
+Console.WriteLine("── KPIs Usuarios ───────────────────────");
+Console.WriteLine($"Total usuarios   : {usuarioService.TotalUsuarios()}");
+Console.WriteLine($"Activos          : {usuarioService.UsuariosActivos()}");
+Console.WriteLine($"Inactivos        : {usuarioService.UsuariosInactivos()}");
+Console.WriteLine();
+
+Console.WriteLine("── KPIs Préstamos ──────────────────────");
+Console.WriteLine($"Total préstamos  : {prestamoService.TotalPrestamos()}");
+Console.WriteLine($"Activos          : {prestamoService.PrestamosActivos()}");
+Console.WriteLine($"Vencidos         : {prestamoService.PrestamosVencidos()}");
+Console.WriteLine($"Devueltos        : {prestamoService.PrestamosDevueltos()}");
+Console.WriteLine($"Promedio días    : {prestamoService.PromedioDiasPrestamo()}");
 
 Console.WriteLine("\nPresione cualquier tecla para continuar al menú...");
 Console.ReadKey();
