@@ -1,15 +1,23 @@
 namespace BibliotecaConsola.Models;
 
-// Representa un libro dentro del sistema de biblioteca
 public class Libro
 {
     // ─── Propiedades ──────────────────────────────────────────────────────────
-    public int    Id       { get; set; }
-    public string Titulo   { get; set; }
-    public string Autor    { get; set; }
-    public string Isbn     { get; set; }
-    public int    Anio     { get; set; }
+    public int    Id        { get; set; }
+    public string Titulo    { get; set; }
+    public string Autor     { get; set; }
+    public string Isbn      { get; set; }
+    public int    Anio      { get; set; }
     public bool   Disponible { get; set; }
+
+    // ─── Constructor vacío ────────────────────────────────────────────────────
+    public Libro()
+    {
+        Titulo     = string.Empty;
+        Autor      = string.Empty;
+        Isbn       = string.Empty;
+        Disponible = true;
+    }
 
     // ─── Constructor completo ─────────────────────────────────────────────────
     public Libro(int id, string titulo, string autor, string isbn, int anio)
@@ -19,16 +27,13 @@ public class Libro
         Autor      = autor;
         Isbn       = isbn;
         Anio       = anio;
-        Disponible = true; // Todo libro inicia disponible
+        Disponible = true;
     }
 
     // ─── Métodos ──────────────────────────────────────────────────────────────
-
-    // Devuelve una línea corta con los datos principales del libro
     public string ResumenCorto() =>
         $"[{Id}] {Titulo} — {Autor} ({Anio})";
 
-    // Devuelve todos los datos del libro formateados
     public string DetalleCompleto() =>
         $"ID       : {Id}\n" +
         $"Título   : {Titulo}\n" +
@@ -36,4 +41,7 @@ public class Libro
         $"ISBN     : {Isbn}\n" +
         $"Año      : {Anio}\n" +
         $"Disponible: {(Disponible ? "Sí" : "No")}";
+
+    // ─── ToString ─────────────────────────────────────────────────────────────
+    public override string ToString() => ResumenCorto();
 }

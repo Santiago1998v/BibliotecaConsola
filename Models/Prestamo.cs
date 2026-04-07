@@ -1,15 +1,25 @@
 namespace BibliotecaConsola.Models;
 
-// Representa un préstamo de un libro a un usuario
 public class Prestamo
 {
     // ─── Propiedades ──────────────────────────────────────────────────────────
-    public int           Id           { get; set; }
-    public Libro         Libro        { get; set; }
-    public Usuario       Usuario      { get; set; }
-    public DateTime      FechaPrestamo  { get; set; }
-    public DateTime      FechaDevolucion { get; set; }
-    public EstadoPrestamo Estado       { get; set; }
+    public int            Id              { get; set; }
+    public Libro          Libro           { get; set; }
+    public Usuario        Usuario         { get; set; }
+    public DateTime       FechaPrestamo   { get; set; }
+    public DateTime?      FechaDevolucion { get; set; }  // nullable
+    public DateTime       FechaPlazo      { get; set; }
+    public EstadoPrestamo Estado          { get; set; }
+
+    // ─── Constructor vacío ────────────────────────────────────────────────────
+    public Prestamo()
+    {
+        Libro           = new Libro();
+        Usuario         = new Usuario();
+        FechaPrestamo   = DateTime.Now;
+        FechaDevolucion = null;
+        Estado          = EstadoPrestamo.Activo;
+    }
 
     // ─── Constructor completo ─────────────────────────────────────────────────
     public Prestamo(int id, Libro libro, Usuario usuario, int diasPlazo = 7)
@@ -18,43 +28,40 @@ public class Prestamo
         Libro           = libro;
         Usuario         = usuario;
         FechaPrestamo   = DateTime.Now;
-        FechaDevolucion = DateTime.Now.AddDays(diasPlazo);
+        FechaDevolucion = null;         // null hasta que se devuelva
+        FechaPlazo      = DateTime.Now.AddDays(diasPlazo);
         Estado          = EstadoPrestamo.Activo;
-
-        // El libro deja de estar disponible al prestarse
         libro.Disponible = false;
     }
 
     // ─── Métodos ──────────────────────────────────────────────────────────────
-
-    // Registra la devolución del libro y actualiza su disponibilidad
     public void Devolver()
     {
         Estado           = EstadoPrestamo.Devuelto;
+        FechaDevolucion  = DateTime.Now;  // registra cuándo se devolvió
         Libro.Disponible = true;
     }
 
-    // Verifica si el préstamo está vencido y actualiza el estado
-    public bool VerificarVencimiento()
-    {
-        if (Estado == EstadoPrestamo.Activo && DateTime.Now > FechaDevolucion)
-        {
-            Estado = EstadoPrestamo.Vencido;
-            return true;
-        }
-        return false;
-    }
+    public bool EstaVencido() =>
+        Estado == EstadoPrestamo.Activo && DateTime.Now > FechaPlazo;
 
-    // Devuelve un resumen corto del préstamo
+    public int DiasTranscurridos() =>
+        (DateTime.Now - FechaPrestamo).Days;
+
     public string ResumenCorto() =>
         $"[{Id}] {Libro.Titulo} → {Usuario.NombreCompleto()} | Estado: {Estado}";
 
-    // Devuelve todos los datos del préstamo formateados
     public string DetalleCompleto() =>
-        $"ID          : {Id}\n" +
-        $"Libro       : {Libro.Titulo}\n" +
-        $"Usuario     : {Usuario.NombreCompleto()}\n" +
+        $"ID              : {Id}\n" +
+        $"Libro           : {Libro.Titulo}\n" +
+        $"Usuario         : {Usuario.NombreCompleto()}\n" +
         $"Fecha préstamo  : {FechaPrestamo:dd/MM/yyyy}\n" +
-        $"Fecha devolución: {FechaDevolucion:dd/MM/yyyy}\n" +
-        $"Estado      : {Estado}";
+        $"Fecha plazo     : {FechaPlazo:dd/MM/yyyy}\n" +
+        $"Fecha devolución: {(FechaDevolucion.HasValue ? FechaDevolucion.Value.ToString("dd/MM/yyyy") : "Pendiente")}\n" +
+        $"Días transcurridos: {DiasTranscurridos()}\n" +
+        $"Vencido         : {(EstaVencido() ? "Sí" : "No")}\n" +
+        $"Estado          : {Estado}";
+
+    // ─── ToString ─────────────────────────────────────────────────────────────
+    public override string ToString() => ResumenCorto();
 }

@@ -1,6 +1,5 @@
 namespace BibliotecaConsola.Models;
 
-// Representa un usuario registrado en el sistema de biblioteca
 public class Usuario
 {
     // ─── Propiedades ──────────────────────────────────────────────────────────
@@ -11,6 +10,16 @@ public class Usuario
     public string Telefono { get; set; }
     public bool   Activo   { get; set; }
 
+    // ─── Constructor vacío ────────────────────────────────────────────────────
+    public Usuario()
+    {
+        Nombre   = string.Empty;
+        Apellido = string.Empty;
+        Email    = string.Empty;
+        Telefono = string.Empty;
+        Activo   = true;
+    }
+
     // ─── Constructor completo ─────────────────────────────────────────────────
     public Usuario(int id, string nombre, string apellido, string email, string telefono)
     {
@@ -19,20 +28,23 @@ public class Usuario
         Apellido = apellido;
         Email    = email;
         Telefono = telefono;
-        Activo   = true; // Todo usuario inicia activo
+        Activo   = true;
     }
 
     // ─── Métodos ──────────────────────────────────────────────────────────────
-
-    // Devuelve el nombre completo del usuario
     public string NombreCompleto() =>
         $"{Nombre} {Apellido}";
 
-    // Devuelve todos los datos del usuario formateados
+    public string ResumenCorto() =>
+        $"[{Id}] {NombreCompleto()} — {Email}";
+
     public string DetalleCompleto() =>
         $"ID       : {Id}\n" +
         $"Nombre   : {NombreCompleto()}\n" +
         $"Email    : {Email}\n" +
         $"Teléfono : {Telefono}\n" +
         $"Activo   : {(Activo ? "Sí" : "No")}";
+
+    // ─── ToString ─────────────────────────────────────────────────────────────
+    public override string ToString() => ResumenCorto();
 }

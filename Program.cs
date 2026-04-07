@@ -34,6 +34,11 @@ Console.WriteLine();
 // Verificar disponibilidad del libro prestado
 Console.WriteLine($"¿Libro disponible tras préstamo? {(libro1.Disponible ? "Sí" : "No")}");
 
+// ← Agrega aquí las dos líneas nuevas
+Console.WriteLine($"¿Está vencido? {(prestamo1.EstaVencido() ? "Sí" : "No")}");
+Console.WriteLine($"Días transcurridos: {prestamo1.DiasTranscurridos()}");
+
+
 // Registrar devolución
 prestamo1.Devolver();
 Console.WriteLine($"Estado tras devolución: {prestamo1.Estado}");
