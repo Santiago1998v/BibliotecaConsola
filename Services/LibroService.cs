@@ -49,4 +49,34 @@ public class LibroService
     public int LibrosDisponibles() => libros.Count(l => l.Disponible);
 
     public int LibrosPrestados() => libros.Count(l => !l.Disponible);
+
+    // ─── Comparación Array vs List ────────────────────────────────────────────
+    public void CompararArrayVsList()
+    {
+        // ARRAY: tamaño fijo, no se puede agregar ni eliminar elementos
+        Libro[] arrayLibros = new Libro[3];
+        arrayLibros[0] = new Libro(1, "Cien años de soledad", "García Márquez", "123", 1967);
+        arrayLibros[1] = new Libro(2, "El principito", "Saint-Exupéry", "456", 1943);
+        arrayLibros[2] = new Libro(3, "Don Quijote", "Cervantes", "789", 1605);
+        // arrayLibros[3] = new Libro(...) → ERROR: índice fuera de rango
+
+        Console.WriteLine("── Array (tamaño fijo = 3) ──────────────");
+        foreach (var l in arrayLibros)
+            Console.WriteLine(l.ResumenCorto());
+
+        // LIST: tamaño dinámico, se puede agregar y eliminar libremente
+        List<Libro> listaLibros = new List<Libro>();
+        listaLibros.Add(new Libro(1, "Cien años de soledad", "García Márquez", "123", 1967));
+        listaLibros.Add(new Libro(2, "El principito", "Saint-Exupéry", "456", 1943));
+        listaLibros.Add(new Libro(3, "Don Quijote", "Cervantes", "789", 1605));
+        listaLibros.Add(new Libro(4, "1984", "Orwell", "101", 1949)); // sin límite
+
+        Console.WriteLine("\n── List (tamaño dinámico) ───────────────");
+        foreach (var l in listaLibros)
+            Console.WriteLine(l.ResumenCorto());
+
+        Console.WriteLine("\n── Diferencia clave ─────────────────────");
+        Console.WriteLine("Array: tamaño fijo, acceso rápido por índice.");
+        Console.WriteLine("List:  tamaño dinámico, métodos Add/Remove/Find.");
+    }
 }
